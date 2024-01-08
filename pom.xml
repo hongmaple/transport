@@ -10,7 +10,7 @@
 
     <name>ruoyi</name>
     <url>http://www.ruoyi.vip</url>
-    <description>若依管理系统</description>
+    <description>管理系统</description>
     
     <properties>
         <ruoyi.version>3.8.5</ruoyi.version>
@@ -163,11 +163,31 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 物流模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>maple-transport</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-common</artifactId>
                 <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 第三方登录，短信，邮件等扩展工具-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>maple-common</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>2.0.25</version>
             </dependency>
 
         </dependencies>
@@ -180,6 +200,8 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>maple-transport</module>
+        <module>maple-common</module>
     </modules>
     <packaging>pom</packaging>
 

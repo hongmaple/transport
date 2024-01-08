@@ -59,6 +59,12 @@
             <artifactId>ruoyi-system</artifactId>
         </dependency>
 
+        <!-- 转运模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>maple-transport</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

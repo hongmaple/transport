@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '若依管理系统',
+      title: '墨西哥跨境物流管理系统',
       logo: logoImg
     }
   }
