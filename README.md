@@ -54,6 +54,10 @@
 演示地址：http://vue.ruoyi.vip  
 文档地址：http://doc.ruoyi.vip
 
+## 目录说明
+ruoyi-ui: 管理后台
+uniapp: 小程序
+
 ## 演示图
 
 <table>
@@ -88,6 +92,26 @@
     <tr>
         <td><img src="https://oscimg.oschina.net/oscnet/b6115bc8c31de52951982e509930b20684a.jpg"/></td>
         <td><img src="https://oscimg.oschina.net/oscnet/up-5e4daac0bb59612c5038448acbcef235e3a.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="/image/QQ图片20240131001532.png"/></td>
+        <td><img src="/image/QQ图片20240131001636.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="/image/QQ图片20240131001642.png"/></td>
+        <td><img src="/image/QQ图片20240131001648.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="/image/QQ图片20240131001656.png"/></td>
+        <td><img src="/image/QQ图片20240131001702.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="/image/QQ图片20240131001707.png"/></td>
+        <td><img src="/image/QQ图片20240131001714.png"/></td>
+    </tr>
+   <tr>
+        <td><img src="/image/QQ图片20240131001721.png"/></td>
+        <td><img src="/image/QQ图片20240131001728.png"/></td>
     </tr>
 </table>
 
