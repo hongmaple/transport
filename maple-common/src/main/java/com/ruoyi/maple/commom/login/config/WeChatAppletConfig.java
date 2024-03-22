@@ -8,11 +8,12 @@ public class WeChatAppletConfig {
     /**
      *  小程序 AppID
      */
-    public static final String APPID = "";
+    public static final String APPID = "wxf592802037687e41";
     /**
      * 小程序 AppSecret
      */
-    public static final String SECRET = "";
+    public static final String SECRET = "ae387261c5b90df2e4d7037688a1421e";
+
 
     /**
      * 请求地址

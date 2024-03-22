@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.CarouselChartMapper">
+    
+    <resultMap type="CarouselChart" id="CarouselChartResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="skipH5Url"    column="skip_h5_url"    />
+        <result property="serialNumber"    column="serial_number"    />
+    </resultMap>
+
+    <sql id="selectCarouselChartVo">
+        select id, title, img_url, skip_h5_url, serial_number from t_carousel_chart
+    </sql>
+
+    <select id="selectCarouselChartList" parameterType="CarouselChart" resultMap="CarouselChartResult">
+        <include refid="selectCarouselChartVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCarouselChartById" parameterType="Long" resultMap="CarouselChartResult">
+        <include refid="selectCarouselChartVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCarouselChart" parameterType="CarouselChart" useGeneratedKeys="true" keyProperty="id">
+        insert into t_carousel_chart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="imgUrl != null and imgUrl != ''">img_url,</if>
+            <if test="skipH5Url != null">skip_h5_url,</if>
+            <if test="serialNumber != null">serial_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+            <if test="skipH5Url != null">#{skipH5Url},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCarouselChart" parameterType="CarouselChart">
+        update t_carousel_chart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
+            <if test="skipH5Url != null">skip_h5_url = #{skipH5Url},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCarouselChartById" parameterType="Long">
+        delete from t_carousel_chart where id = #{id}
+    </delete>
+
+    <delete id="deleteCarouselChartByIds" parameterType="String">
+        delete from t_carousel_chart where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

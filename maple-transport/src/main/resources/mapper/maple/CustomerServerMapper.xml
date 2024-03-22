@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.CustomerServerMapper">
+
+    <resultMap type="CustomerServer" id="CustomerServerResult">
+        <result property="id" column="id"/>
+        <result property="phone" column="phone"/>
+        <result property="wxUrl" column="wx_url"/>
+        <result property="status" column="status"/>
+        <result property="bindCount" column="bindCount"/>
+    </resultMap>
+
+    <sql id="selectCustomerServerVo">
+        select s.id, s.phone, s.wx_url, s.status, count(DISTINCT b.IP) bindCount
+        from t_customer_server s
+                 left join t_customer_server_bind b on s.id = b.customer_server_id
+    </sql>
+
+    <select id="selectCustomerServerList" parameterType="CustomerServer" resultMap="CustomerServerResult">
+        <include refid="selectCustomerServerVo"/>
+        <where>
+            <if test="phone != null  and phone != ''">and s.phone = #{phone}</if>
+            <if test="wxUrl != null  and wxUrl != ''">and s.wx_url = #{wxUrl}</if>
+            <if test="status != null  and status != ''">and s.status = #{status}</if>
+        </where>
+        GROUP BY s.id
+    </select>
+
+    <select id="selectCustomerServerById" parameterType="Long" resultMap="CustomerServerResult">
+        <include refid="selectCustomerServerVo"/>
+        where s.id = #{id}
+        GROUP BY s.id
+    </select>
+
+    <insert id="insertCustomerServer" parameterType="CustomerServer" useGeneratedKeys="true" keyProperty="id">
+        insert into t_customer_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="wxUrl != null and wxUrl != ''">wx_url,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="wxUrl != null and wxUrl != ''">#{wxUrl},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCustomerServer" parameterType="CustomerServer">
+        update t_customer_server
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="wxUrl != null and wxUrl != ''">wx_url = #{wxUrl},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerServerById" parameterType="Long">
+        delete
+        from t_customer_server
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerServerByIds" parameterType="String">
+        delete from t_customer_server where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

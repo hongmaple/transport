@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.ExpressCompanyMapper">
+    
+    <resultMap type="ExpressCompany" id="ExpressCompanyResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="firstWeightPrice"    column="first_weight_price"    />
+    </resultMap>
+
+    <sql id="selectExpressCompanyVo">
+        select id, name, first_weight_price from t_express_company
+    </sql>
+
+    <select id="selectExpressCompanyList" parameterType="ExpressCompany" resultMap="ExpressCompanyResult">
+        <include refid="selectExpressCompanyVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="firstWeightPrice != null "> and first_weight_price &gt;= #{firstWeightPrice}</if>
+        </where>
+    </select>
+    
+    <select id="selectExpressCompanyById" parameterType="Long" resultMap="ExpressCompanyResult">
+        <include refid="selectExpressCompanyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExpressCompany" parameterType="ExpressCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into t_express_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="firstWeightPrice != null">first_weight_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="firstWeightPrice != null">#{firstWeightPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExpressCompany" parameterType="ExpressCompany">
+        update t_express_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="firstWeightPrice != null">first_weight_price = #{firstWeightPrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExpressCompanyById" parameterType="Long">
+        delete from t_express_company where id = #{id}
+    </delete>
+
+    <delete id="deleteExpressCompanyByIds" parameterType="String">
+        delete from t_express_company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

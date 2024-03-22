@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.OrderMapper">
+    
+    <resultMap type="Order" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="trackingNumber"    column="tracking_number"    />
+        <result property="name"    column="name"    />
+        <result property="num"    column="num"    />
+        <result property="wareouseId"    column="wareouse_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="warehousingTime"    column="warehousing_time"    />
+        <result property="warehousingImg"    column="warehousing_img"    />
+        <result property="warehousingUserId"    column="warehousing_user_id"    />
+        <result property="containerNumber"    column="container_number"    />
+        <result property="outboundTime"    column="outbound_time"    />
+        <result property="outboundUserId"    column="outbound_user_id"    />
+        <result property="weight"    column="weight"    />
+        <result property="volume"    column="volume"    />
+        <result property="freightPrice"    column="freight_price"    />
+        <result property="totalPrice"    column="total_price"    />
+        <result property="preferentialPrice"    column="preferential_price"    />
+        <result property="actualPayment"    column="actual_payment"    />
+        <result property="payTime"    column="pay_time"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="transactionNumber"    column="transaction_number"    />
+        <result property="consignee"    column="consignee"    />
+        <result property="address"    column="address"    />
+        <result property="phone"    column="phone"    />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select id, tracking_number, name, num, wareouse_id, remark, create_id, create_time, status, warehousing_time, warehousing_img, warehousing_user_id, container_number, outbound_time, outbound_user_id, weight, volume,freight_price, total_price, preferential_price, actual_payment, pay_time, pay_type, transaction_number, consignee, address, phone from t_order
+    </sql>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="trackingNumber != null  and trackingNumber != ''"> and tracking_number like concat('%', #{trackingNumber}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="num != null "> and num &gt;= #{num}</if>
+            <if test="wareouseId != null "> and wareouse_id = #{wareouseId}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginWarehousingTime != null and params.beginWarehousingTime != '' and params.endWarehousingTime != null and params.endWarehousingTime != ''"> and warehousing_time between #{params.beginWarehousingTime} and #{params.endWarehousingTime}</if>
+            <if test="warehousingUserId != null "> and warehousing_user_id = #{warehousingUserId}</if>
+            <if test="containerNumber != null  and containerNumber != ''"> and container_number like concat('%', #{containerNumber}, '%')</if>
+            <if test="params.beginOutboundTime != null and params.beginOutboundTime != '' and params.endOutboundTime != null and params.endOutboundTime != ''"> and outbound_time between #{params.beginOutboundTime} and #{params.endOutboundTime}</if>
+            <if test="outboundUserId != null "> and outbound_user_id = #{outboundUserId}</if>
+            <if test="weight != null "> and weight &gt;= #{weight}</if>
+            <if test="totalPrice != null "> and total_price &gt;= #{totalPrice}</if>
+            <if test="preferentialPrice != null "> and preferential_price &gt;= #{preferentialPrice}</if>
+            <if test="actualPayment != null "> and actual_payment &gt;= #{actualPayment}</if>
+            <if test="params.beginPayTime != null and params.beginPayTime != '' and params.endPayTime != null and params.endPayTime != ''"> and pay_time between #{params.beginPayTime} and #{params.endPayTime}</if>
+            <if test="payType != null  and payType != ''"> and pay_type = #{payType}</if>
+            <if test="transactionNumber != null  and transactionNumber != ''"> and transaction_number like concat('%', #{transactionNumber}, '%')</if>
+            <if test="consignee != null  and consignee != ''"> and consignee like concat('%', #{consignee}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrder" parameterType="Order">
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="trackingNumber != null and trackingNumber != ''">tracking_number,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="num != null">num,</if>
+            <if test="wareouseId != null">wareouse_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="warehousingTime != null">warehousing_time,</if>
+            <if test="warehousingImg != null">warehousing_img,</if>
+            <if test="warehousingUserId != null">warehousing_user_id,</if>
+            <if test="containerNumber != null">container_number,</if>
+            <if test="outboundTime != null">outbound_time,</if>
+            <if test="outboundUserId != null">outbound_user_id,</if>
+            <if test="weight != null">weight,</if>
+            <if test="volume != null">volume,</if>
+            <if test="freightPrice != null">freight_price,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="preferentialPrice != null">preferential_price,</if>
+            <if test="actualPayment != null">actual_payment,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="payType != null">pay_type,</if>
+            <if test="transactionNumber != null">transaction_number,</if>
+            <if test="consignee != null">consignee,</if>
+            <if test="address != null">address,</if>
+            <if test="phone != null">phone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="trackingNumber != null and trackingNumber != ''">#{trackingNumber},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="num != null">#{num},</if>
+            <if test="wareouseId != null">#{wareouseId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="warehousingTime != null">#{warehousingTime},</if>
+            <if test="warehousingImg != null">#{warehousingImg},</if>
+            <if test="warehousingUserId != null">#{warehousingUserId},</if>
+            <if test="containerNumber != null">#{containerNumber},</if>
+            <if test="outboundTime != null">#{outboundTime},</if>
+            <if test="outboundUserId != null">#{outboundUserId},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="volume != null">#{volume},</if>
+            <if test="freightPrice != null">#{freightPrice},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+            <if test="preferentialPrice != null">#{preferentialPrice},</if>
+            <if test="actualPayment != null">#{actualPayment},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="payType != null">#{payType},</if>
+            <if test="transactionNumber != null">#{transactionNumber},</if>
+            <if test="consignee != null">#{consignee},</if>
+            <if test="address != null">#{address},</if>
+            <if test="phone != null">#{phone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update t_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="trackingNumber != null and trackingNumber != ''">tracking_number = #{trackingNumber},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="wareouseId != null">wareouse_id = #{wareouseId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="warehousingTime != null">warehousing_time = #{warehousingTime},</if>
+            <if test="warehousingImg != null">warehousing_img = #{warehousingImg},</if>
+            <if test="warehousingUserId != null">warehousing_user_id = #{warehousingUserId},</if>
+            <if test="containerNumber != null">container_number = #{containerNumber},</if>
+            <if test="outboundTime != null">outbound_time = #{outboundTime},</if>
+            <if test="outboundUserId != null">outbound_user_id = #{outboundUserId},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="volume != null">volume = #{volume},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="preferentialPrice != null">preferential_price = #{preferentialPrice},</if>
+            <if test="actualPayment != null">actual_payment = #{actualPayment},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="transactionNumber != null">transaction_number = #{transactionNumber},</if>
+            <if test="consignee != null">consignee = #{consignee},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="phone != null">phone = #{phone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="Long">
+        delete from t_order where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from t_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

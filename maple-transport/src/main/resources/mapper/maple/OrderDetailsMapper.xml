@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.OrderDetailsMapper">
+    
+    <resultMap type="OrderDetails" id="OrderDetailsResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="price"    column="price"    />
+        <result property="num"    column="num"    />
+        <result property="coverUrl"    column="cover_url"    />
+    </resultMap>
+
+    <sql id="selectOrderDetailsVo">
+        select order_id, goods_id, goods_name, price, num, cover_url from t_order_details
+    </sql>
+
+    <select id="selectOrderDetailsList" parameterType="OrderDetails" resultMap="OrderDetailsResult">
+        <include refid="selectOrderDetailsVo"/>
+        <where>  
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="price != null "> and price &gt;= #{price}</if>
+            <if test="num != null "> and num &gt;= #{num}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderDetailsByOrderId" parameterType="Long" resultMap="OrderDetailsResult">
+        <include refid="selectOrderDetailsVo"/>
+        where order_id = #{orderId}
+    </select>
+        
+    <insert id="insertOrderDetails" parameterType="OrderDetails">
+        insert into t_order_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="goodsId != null">goods_id,</if>
+            <if test="goodsName != null and goodsName != ''">goods_name,</if>
+            <if test="price != null">price,</if>
+            <if test="num != null">num,</if>
+            <if test="coverUrl != null">cover_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="price != null">#{price},</if>
+            <if test="num != null">#{num},</if>
+            <if test="coverUrl != null">#{coverUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderDetails" parameterType="OrderDetails">
+        update t_order_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null">goods_id = #{goodsId},</if>
+            <if test="goodsName != null and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="coverUrl != null">cover_url = #{coverUrl},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteOrderDetailsByOrderId" parameterType="Long">
+        delete from t_order_details where order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteOrderDetailsByOrderIds" parameterType="String">
+        delete from t_order_details where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+</mapper>

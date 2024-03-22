@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.OrderLogisticsMapper">
+    
+    <resultMap type="OrderLogistics" id="OrderLogisticsResult">
+        <result property="orederId"    column="oreder_id"    />
+        <result property="trackingNumber"    column="tracking_number"    />
+        <result property="expressCompanyId"    column="express_company_id"    />
+        <result property="consignee"    column="consignee"    />
+        <result property="address"    column="address"    />
+        <result property="phone"    column="phone"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectOrderLogisticsVo">
+        select oreder_id, tracking_number, express_company_id, consignee, address, phone, create_time from t_order_logistics
+    </sql>
+
+    <select id="selectOrderLogisticsList" parameterType="OrderLogistics" resultMap="OrderLogisticsResult">
+        <include refid="selectOrderLogisticsVo"/>
+        <where>  
+            <if test="trackingNumber != null  and trackingNumber != ''"> and tracking_number like concat('%', #{trackingNumber}, '%')</if>
+            <if test="expressCompanyId != null "> and express_company_id = #{expressCompanyId}</if>
+            <if test="consignee != null  and consignee != ''"> and consignee like concat('%', #{consignee}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderLogisticsByOrederId" parameterType="Long" resultMap="OrderLogisticsResult">
+        <include refid="selectOrderLogisticsVo"/>
+        where oreder_id = #{orederId}
+    </select>
+        
+    <insert id="insertOrderLogistics" parameterType="OrderLogistics">
+        insert into t_order_logistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orederId != null">oreder_id,</if>
+            <if test="trackingNumber != null and trackingNumber != ''">tracking_number,</if>
+            <if test="expressCompanyId != null">express_company_id,</if>
+            <if test="consignee != null and consignee != ''">consignee,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orederId != null">#{orederId},</if>
+            <if test="trackingNumber != null and trackingNumber != ''">#{trackingNumber},</if>
+            <if test="expressCompanyId != null">#{expressCompanyId},</if>
+            <if test="consignee != null and consignee != ''">#{consignee},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderLogistics" parameterType="OrderLogistics">
+        update t_order_logistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="trackingNumber != null and trackingNumber != ''">tracking_number = #{trackingNumber},</if>
+            <if test="expressCompanyId != null">express_company_id = #{expressCompanyId},</if>
+            <if test="consignee != null and consignee != ''">consignee = #{consignee},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where oreder_id = #{orederId}
+    </update>
+
+    <delete id="deleteOrderLogisticsByOrederId" parameterType="Long">
+        delete from t_order_logistics where oreder_id = #{orederId}
+    </delete>
+
+    <delete id="deleteOrderLogisticsByOrederIds" parameterType="String">
+        delete from t_order_logistics where oreder_id in 
+        <foreach item="orederId" collection="array" open="(" separator="," close=")">
+            #{orederId}
+        </foreach>
+    </delete>
+</mapper>

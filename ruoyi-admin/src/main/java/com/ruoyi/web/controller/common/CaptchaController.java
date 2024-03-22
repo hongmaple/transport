@@ -2,13 +2,19 @@ package com.ruoyi.web.controller.common;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.maple.commom.sms.service.SmsService;
+import com.ruoyi.system.domain.dto.SmsSendBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.Producer;
 import com.ruoyi.common.config.RuoYiConfig;
@@ -39,6 +45,9 @@ public class CaptchaController
     
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    private SmsService smsService;
     /**
      * 生成验证码
      */
@@ -91,4 +100,26 @@ public class CaptchaController
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
     }
+
+    @PostMapping("/sendSmsCode")
+    public AjaxResult sendSmsCode(@RequestBody SmsSendBody smsSendBody) {
+        Random random = new Random();
+        int code = random.nextInt(6);
+        AjaxResult ajax = AjaxResult.success();
+        boolean captchaEnabled = configService.selectCaptchaEnabled();
+        ajax.put("captchaEnabled", captchaEnabled);
+        if (!captchaEnabled)
+        {
+            return ajax;
+        }
+        // 保存验证码信息
+        String uuid = IdUtils.simpleUUID();
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
+        redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+        ajax.put("uuid", uuid);
+        ajax.put("smsResponse",smsService.sendCode(smsSendBody.getPhone(),
+                "alibaba",String.valueOf(code)));
+        return ajax;
+    }
+
 }

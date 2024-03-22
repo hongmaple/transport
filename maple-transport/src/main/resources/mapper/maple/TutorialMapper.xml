@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.TutorialMapper">
+    
+    <resultMap type="Tutorial" id="TutorialResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+    </resultMap>
+
+    <sql id="selectTutorialVo">
+        select id, title, content from t_tutorial
+    </sql>
+
+    <select id="selectTutorialList" parameterType="Tutorial" resultMap="TutorialResult">
+        <include refid="selectTutorialVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTutorialById" parameterType="Long" resultMap="TutorialResult">
+        <include refid="selectTutorialVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTutorial" parameterType="Tutorial" useGeneratedKeys="true" keyProperty="id">
+        insert into t_tutorial
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTutorial" parameterType="Tutorial">
+        update t_tutorial
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTutorialById" parameterType="Long">
+        delete from t_tutorial where id = #{id}
+    </delete>
+
+    <delete id="deleteTutorialByIds" parameterType="String">
+        delete from t_tutorial where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

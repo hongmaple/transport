@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maple.mapper.CustomerServerBindMapper">
+
+    <resultMap type="CustomerServerBind" id="CustomerServerBindResult">
+        <result property="id"    column="id"    />
+        <result property="customerServerId"    column="customer_server_id"    />
+        <result property="IP"    column="IP"    />
+    </resultMap>
+
+    <sql id="selectCustomerServerBindVo">
+        select id, customer_server_id, IP from t_customer_server_bind
+    </sql>
+
+    <select id="selectCustomerServerBindList" parameterType="CustomerServerBind" resultMap="CustomerServerBindResult">
+        <include refid="selectCustomerServerBindVo"/>
+        <where>
+            <if test="customerServerId != null "> and customer_server_id = #{customerServerId}</if>
+            <if test="IP != null  and IP != ''"> and IP like concat('%', #{IP}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectCustomerServerBindById" parameterType="Long" resultMap="CustomerServerBindResult">
+        <include refid="selectCustomerServerBindVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCustomerServerBind" parameterType="CustomerServerBind">
+        insert into t_customer_server_bind
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="customerServerId != null">customer_server_id,</if>
+            <if test="IP != null">IP,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="customerServerId != null">#{customerServerId},</if>
+            <if test="IP != null">#{IP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCustomerServerBind" parameterType="CustomerServerBind">
+        update t_customer_server_bind
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerServerId != null">customer_server_id = #{customerServerId},</if>
+            <if test="IP != null">IP = #{IP},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerServerBindById" parameterType="Long">
+        delete from t_customer_server_bind where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerServerBindByIds" parameterType="String">
+        delete from t_customer_server_bind where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteCustomeSerVerBindByServerId">
+        delete from t_customer_server_bind where customer_server_id = #{serverId}
+    </delete>
+</mapper>

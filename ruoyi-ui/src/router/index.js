@@ -161,7 +161,49 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
-  }
+  },
+  {
+    path: '/maple/logistics-dateil',
+    component: Layout,
+    hidden: true,
+    permissions: ['maple:logistics:list'],
+    children: [
+      {
+        path: 'index/:orderId(\\d+)',
+        component: () => import('@/views/maple/logistics/index'),
+        name: 'logistics-dateil',
+        meta: { title: '物流数据', activeMenu: '/maple/logistics' }
+      }
+    ]
+  },
+  {
+    path: '/maple/order-dateil',
+    component: Layout,
+    hidden: true,
+    permissions: ['maple:orederDetails:list'],
+    children: [
+      {
+        path: 'index/:orderId(\\d+)',
+        component: () => import('@/views/maple/orederDetails/index'),
+        name: 'order-dateil',
+        meta: { title: '订单详情', activeMenu: '/maple/orederDetails' }
+      }
+    ]
+  },
+  {
+    path: '/maple/status-log',
+    component: Layout,
+    hidden: true,
+    permissions: ['maple:statusLog:list'],
+    children: [
+      {
+        path: 'index/:targetId(\\d+)/:targetType(\\d+)',
+        component: () => import('@/views/maple/statusLog/index'),
+        name: 'status-log',
+        meta: { title: '物流日志', activeMenu: '/maple/statusLog' }
+      }
+    ]
+  },
 ]
 
 // 防止连续点击多次路由报错

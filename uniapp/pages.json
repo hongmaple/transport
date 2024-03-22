@@ -1,0 +1,223 @@
+{
+	  "pages": [ {
+		"path": "pages/index",
+		"style": {
+		  "navigationBarTitleText": "首页",
+		  "navigationStyle": "custom"
+		}
+	  },{
+		"path": "pages/login",
+		"style": {
+		  "navigationBarTitleText": "登录"
+		}
+	  }, {
+		"path": "pages/registe",
+		"style": {
+		  "navigationBarTitleText": "注册"
+		}
+	  }, {
+		"path": "pages/work/index",
+		"style": {
+		  "navigationBarTitleText": "应用"
+		}
+	  }, {
+		"path": "pages/mine/index",
+		"style": {
+		  "navigationBarTitleText": "我的"
+		}
+	  }, {
+		"path": "pages/mine/avatar/index",
+		"style": {
+		  "navigationBarTitleText": "修改头像"
+		}
+	  }, {
+		"path": "pages/mine/info/index",
+		"style": {
+		  "navigationBarTitleText": "个人信息"
+		}
+	  }, {
+		"path": "pages/mine/info/edit",
+		"style": {
+		  "navigationBarTitleText": "编辑资料"
+		}
+	  }, {
+		"path": "pages/mine/pwd/index",
+		"style": {
+		  "navigationBarTitleText": "修改密码"
+		}
+	  }, {
+		"path": "pages/mine/setting/index",
+		"style": {
+		  "navigationBarTitleText": "应用设置"
+		}
+	  }, {
+		"path": "pages/mine/help/index",
+		"style": {
+		  "navigationBarTitleText": "常见问题"
+		}
+	  }, {
+		"path": "pages/mine/about/index",
+		"style": {
+		  "navigationBarTitleText": "关于我们"
+		}
+	  }, {
+		"path": "pages/common/webview/index",
+		"style": {
+		  "navigationBarTitleText": "浏览网页"
+		}
+	  }, {
+		"path": "pages/common/textview/index",
+		"style": {
+		  "navigationBarTitleText": "浏览文本"
+		}
+	  }, {
+		"path": "pages/sys/notice/add",
+		"style": {
+		  "navigationBarTitleText": "添加/编辑公告"
+		}
+	  }, {
+		"path": "pages/sys/notice/detail",
+		"style": {
+		  "navigationBarTitleText": "公告详情"
+		}
+	  }, {
+		"path": "pages/sys/notice/list",
+		"style": {
+		  "navigationBarTitleText": "公告管理"
+		}
+	  }, {
+		"path": "pages/maple/customerServer/index",
+		"style": {
+		  "navigationBarTitleText": "客服中心"
+		}
+	  }
+        ,{
+            "path" : "pages/sys/notice/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "消息中心",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/order/add",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加包裹",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/order/list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单列表",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/address/addOrUpdate",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑地址",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/warehouse/list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "仓库列表",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/common/richtextview/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/tutorial/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/address/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/feedback/add",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "反馈",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/order/pay",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "支付",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/maple/order/detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/index",
+        "iconPath": "static/images/tabbar/home.png",
+        "selectedIconPath": "static/images/tabbar/home_.png",
+        "text": "首页"
+      }, {
+        "pagePath": "pages/maple/order/list",
+        "iconPath": "static/images/tabbar/work.png",
+        "selectedIconPath": "static/images/tabbar/work_.png",
+        "text": "订单"
+      }, {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/images/tabbar/mine.png",
+        "selectedIconPath": "static/images/tabbar/mine_.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "maple",
+    "navigationBarBackgroundColor": "#FFFFFF",
+	"navigationStyle": "custom"
+  }
+}
